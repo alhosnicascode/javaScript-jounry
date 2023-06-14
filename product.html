@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Information and Billing</title>
+    <style>
+        #product-table {
+            margin-bottom: 20px;
+           
+        }
+        #product-table td {
+            padding: 5px;
+        }
+        #product-table th {
+            padding: 30px;
+        }
+        #bill {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+
+        .container{
+           
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+    flex-wrap: wrap;
+}
+.box1{
+    width: 700px;
+    height: 120px 0px;
+    background-color: #ffffff;
+
+    border: 1px solid #ececec;
+    margin: 20px;
+}
+.text1{
+    text-align: center;
+    text-decoration: solid;
+    font-weight: bold;
+    font-size: 25px;
+    color: rgb(168, 39, 13);
+}
+
+
+    </style>
+    <script>
+       
+        var products = [];
+
+      
+        function addProduct() {
+            var ID = parseInt(document.getElementById('ID').value);
+            var name = document.getElementById('name').value;
+            var price = parseFloat(document.getElementById('price').value);
+            var quantity = parseInt(document.getElementById('quantity').value);
+
+          
+            var product = {
+                ID:ID,
+                name: name,
+                price: price,
+                quantity: quantity
+            };
+
+          
+            products.push(product);
+
+           
+            document.getElementById('ID').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('quantity').value = '';
+
+        
+            updateProductTable();
+        }
+
+    
+        function updateProductTable() {
+            var table = document.getElementById('product-table');
+            var tbody = table.getElementsByTagName('tbody')[0];
+
+     
+            tbody.innerHTML = '';
+
+         
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+
+                var row = document.createElement('tr');
+
+                var IDCell = document.createElement('td');
+                IDCell.innerHTML = product.ID;
+                row.appendChild(IDCell);
+
+                var nameCell = document.createElement('td');
+                nameCell.innerHTML = product.name;
+                row.appendChild(nameCell);
+
+                var priceCell = document.createElement('td');
+                priceCell.innerHTML = product.price.toFixed(2);
+                row.appendChild(priceCell);
+
+                var quantityCell = document.createElement('td');
+                quantityCell.innerHTML = product.quantity;
+                row.appendChild(quantityCell);
+
+                tbody.appendChild(row);
+            }
+        }
+
+        function calculateBill() {
+            var total = 0;
+
+        
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+                total += product.price * product.quantity;
+            }
+
+           
+            var billElement = document.getElementById('bill');
+            billElement.innerHTML = 'Total Bill: OMR' + total.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Product Information and Billing</h1>
+    <div class="container">
+
+        <div class="box1">
+            <span class="text1">Products</span>
+            <br>
+            <br>
+            <div>
+                <label for="ID" >ID:</label>
+                <input type="number" id="ID" placeholder="Enter ID">
+            </div>
+            <br>
+            <br>
+    <div>
+        <label for="name">Product Name:</label>
+        <input type="text" id="name"  placeholder="Enter Name">
+    </div>
+    <br>
+    <br>
+
+
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" step="0.01" placeholder="Enter Price">
+    </div>
+     <br>
+     <br>
+    <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" step="1"  placeholder="Enter Quantity">
+    </div>
+     <br>
+     <br>
+    <button onclick="addProduct()">Add Product</button>
+</div>
+
+    <div class="box1">
+        <span class="text1">Cart</span>
+    <table id="product-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                
+                <th>Name</th>
+                
+                <th>Price</th>
+              
+                <th>Quantity</th>
+             
+            </tr>
+        </thead>
+        <tbody>
+      
+         
+        </tbody>
+    </table>
+</div>
+    <div class="box1">
+      
+    <button onclick="calculateBill()">Generate Bill</button>
+
+    <p id="bill"></p>
+    </div>
+    </div>
+
+</body>
+</html>
